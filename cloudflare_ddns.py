@@ -2,7 +2,7 @@ import requests
 import json
 import sys
 
-def cloudflare_ddns(myIp, domain, subDomian, ipType, cF_email, cF_ApiKey):
+def cloudflare_ddns(myIp, useCDN, domain, subDomian, ipType, cF_email, cF_ApiKey):
     if subDomian == "":
         requestDomain = domain
     else:
@@ -42,11 +42,15 @@ def cloudflare_ddns(myIp, domain, subDomian, ipType, cF_email, cF_ApiKey):
         if dns_recordDict["result"][i]["name"] == requestDomain:
             print("hit :", dns_recordDict["result"][i]["name"])
             recordID = dns_recordDict["result"][i]["id"]
+            if useCDN is None:
+                useCDN = dns_recordDict["result"][i]["proxied"]
+            else:
+                useCDN = useCDN
             break
 
     # change dns record
     recordEditUrl = f"{baseUrl}/zones/{zoneID}/dns_records/{recordID}"
-    payload = {"type": ipType, "name": requestDomain, "content": myIp, "ttl":120, "proxied":False}
+    payload = {"type": ipType, "name": requestDomain, "content": myIp, "ttl":120, "proxied":useCDN}
     changeDns = requests.request("put", recordEditUrl, headers=headers, json=payload) # or data=json.dumps(payload)
     print(f"\n    Last Response status_code: {changeDns.status_code}; \"**if 200 is ok, other is noway;**\" \n")
     print(f"    Last Response json : \n         {changeDns.json()}")
@@ -70,6 +74,10 @@ if __name__ == "__main__":
                 ipv4=A, ipv6=AAAA。 default: A;
             -ip:
                 will change ip. default:  auto get from web;
+            -cdn:
+                proxied, Whether the record is receiving the performance and security benefits of Cloudflare;
+                True or False; default: keep set; 
+            
         # how to use(1): 
             example: 
                 # change gamefunc.top:
@@ -94,7 +102,8 @@ if __name__ == "__main__":
                  "-d": "gamefunc.top",
                  "-sd": "",
                  "-t": "A",
-                 "-ip": None}
+                 "-ip": None,
+                 "-cdn": None}
 
     inputParamets = sys.argv
 
@@ -131,6 +140,6 @@ if __name__ == "__main__":
         # myIp = netifaces.ifaddresses('ppp0')[2][0]['addr']
 
     # exec
-    cloudflare_ddns(paramets["-ip"], 
+    cloudflare_ddns(paramets["-ip"], paramets["-cdn"], 
                     paramets["-d"], paramets["-sd"], paramets["-t"],
                     paramets["-e"], paramets["-k"])
