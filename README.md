@@ -29,7 +29,7 @@ cloudflare ddns for python3 ; support ipv4 and ipv6;
                 # if change to ipv6:
                     python3 cloudflare_ddns.py -e fevefun@hotmail.com -k 1234567 -d gamefunc.top -sd ipv6 -t AAAA
                     
-        # how to use(2):
+        # or how to use(2):
             direct change "paramets" dict variable;
             
         # crontab -e
