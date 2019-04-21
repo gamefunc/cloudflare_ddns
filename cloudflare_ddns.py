@@ -42,10 +42,10 @@ def cloudflare_ddns(myIp, useCDN, domain, subDomian, ipType, cF_email, cF_ApiKey
         if dns_recordDict["result"][i]["name"] == requestDomain:
             print("hit :", dns_recordDict["result"][i]["name"])
             recordID = dns_recordDict["result"][i]["id"]
-            if useCDN is None:
+            if useCDN != "keep":
                 useCDN = dns_recordDict["result"][i]["proxied"]
             else:
-                useCDN = True if useCDN == "True" else False
+                useCDN = True if useCDN == "yes" else False
             break
 
     # change dns record
@@ -76,7 +76,7 @@ if __name__ == "__main__":
                 will change ip. default:  auto get from web;
             -cdn:
                 proxied, Whether the record is receiving the performance and security benefits of Cloudflare;
-                True or False; default: keep set; 
+                [yes | no | keep]; default: keep set; 
             
         # how to use(1): 
             example: 
@@ -103,7 +103,7 @@ if __name__ == "__main__":
                  "-sd": "",
                  "-t": "A",
                  "-ip": None,
-                 "-cdn": None}
+                 "-cdn": "keep"}
 
     inputParamets = sys.argv
 
