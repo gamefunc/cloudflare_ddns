@@ -42,7 +42,7 @@ def cloudflare_ddns(myIp, useCDN, domain, subDomian, ipType, cF_email, cF_ApiKey
         if dns_recordDict["result"][i]["name"] == requestDomain:
             print("hit :", dns_recordDict["result"][i]["name"])
             recordID = dns_recordDict["result"][i]["id"]
-            if useCDN != "keep":
+            if useCDN == "keep":
                 useCDN = dns_recordDict["result"][i]["proxied"]
             else:
                 useCDN = True if useCDN == "yes" else False
