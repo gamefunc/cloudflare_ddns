@@ -17,6 +17,10 @@ cloudflare ddns for python3 ; support ipv4 and ipv6;
                 ipv4=A, ipv6=AAAA。 default: A;
             -ip:
                 will change ip. default:  auto get from web;
+            -cdn:
+                proxied, Whether the record is receiving the performance and security benefits of Cloudflare;
+                True or False; default: keep set; 
+
                 
         # how to use(1): 
             example: 
