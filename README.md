@@ -1,5 +1,5 @@
 # cloudflare_ddns
-cloudflare ddns for python3 ; support ipv4 and ipv6;
+cloudflare ddns with python3 ; support ipv4 and ipv6;
 
         # only support python3; need: pip3 install requests;
         # https://api.cloudflare.com/#dns-records-for-a-zone-update-dns-record
