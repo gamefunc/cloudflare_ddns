@@ -104,7 +104,7 @@ if __name__ == "__main__":
 
     for parameter in paramets.keys():
         if inputParamets.count(parameter) > 1:
-            raise TypeError(f"{parameter} 大于1个")
+            raise TypeError(f"{parameter} input > 1")
 
     for parameter in paramets.keys():
         try:
