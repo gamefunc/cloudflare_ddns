@@ -45,7 +45,7 @@ def cloudflare_ddns(myIp, useCDN, domain, subDomian, ipType, cF_email, cF_ApiKey
             if useCDN is None:
                 useCDN = dns_recordDict["result"][i]["proxied"]
             else:
-                useCDN = useCDN
+                useCDN = True if useCDN == "True" else False
             break
 
     # change dns record
